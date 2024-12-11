@@ -31,7 +31,7 @@ public class CourseTest extends BaseTest {
         loginPage.inputPasswordField();
         loginPage.clickLoginButton();
 
-        mainPage.clickcourseBuotton();
+        mainPage.clickCourseButton();
 
         coursePage.clickAddButton();
         coursePage.inputCourseNameField();

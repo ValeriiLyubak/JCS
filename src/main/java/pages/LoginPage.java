@@ -1,37 +1,41 @@
 package pages;
 
 import configuration.ConfigManager;
-import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.WebDriverWait;
-import java.time.Duration;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.support.PageFactory;
 
 public class LoginPage extends BasePage {
 
-    private By loginField = By.xpath("//input[@id='username']");
-    private By passwordField = By.xpath("//input[@id='password']");
-    private By loginButton = By.xpath("//button[@type='submit']");
+    @FindBy(xpath = "//input[@id='username']")
+    private WebElement loginInput;
+
+    @FindBy(xpath = "//input[@id='password']")
+    private WebElement passwordInput;
+
+    @FindBy(xpath = "//button[@type='submit']")
+    private WebElement submitButton;
 
     public LoginPage(WebDriver driver) {
         super(driver);
         navigateToBaseUrl();
+        waitForPageToLoad();
+        PageFactory.initElements(driver, this);
     }
 
     public void inputLoginField() {
-        wait.until(ExpectedConditions.visibilityOfElementLocated(loginField));
-        driver.findElement(loginField).sendKeys(ConfigManager.getUsername());
+        waitForElementToBeClickable(loginInput);
+        loginInput.sendKeys(ConfigManager.getUsername());
     }
 
     public void inputPasswordField() {
-        wait.until(ExpectedConditions.visibilityOfElementLocated(passwordField));
-        driver.findElement(passwordField).sendKeys(ConfigManager.getPassword());
+        waitForElementToBeVisible(passwordInput);
+        passwordInput.sendKeys(ConfigManager.getPassword());
     }
 
-
     public void clickLoginButton() {
-        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
-        wait.until(ExpectedConditions.visibilityOfElementLocated(loginButton));
-        driver.findElement(loginButton).click();
+        waitForElementToBeClickable(submitButton);
+        submitButton.click();
     }
 }

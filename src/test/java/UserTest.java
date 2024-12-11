@@ -31,13 +31,11 @@ public class UserTest extends BaseTest {
     public void testAddUsersFromCSV() {
         logger.info("=== Начинаем тест: Добавление пользователей из CSV ===");
 
-        // Авторизация
         loginPage.inputLoginField();
         loginPage.inputPasswordField();
         loginPage.clickLoginButton();
 
-        // Переход на страницу пользователей
-        mainPage.clickuserBuotton();
+        mainPage.clickUserButton();
 
         String filePath = ConfigManager.getCsvFilePath();
         List<String> userLogins = new ArrayList<>();
@@ -46,7 +44,6 @@ public class UserTest extends BaseTest {
             String line;
             while ((line = reader.readLine()) != null) {
                 String[] userData = line.split(",");
-                // Проверяем точное количество полей
                 if (userData.length >= 4) {
                     String login = userData[3].trim();
                     userLogins.add(login);
@@ -57,7 +54,6 @@ public class UserTest extends BaseTest {
             Assert.fail("Не удалось прочитать файл CSV: " + filePath);
         }
 
-        // Добавление пользователей
         try {
             userPage.addUsersFromCSV(filePath);
         } catch (IOException e) {

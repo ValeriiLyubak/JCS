@@ -4,7 +4,9 @@ import configuration.ConfigManager;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
+
 import java.time.Duration;
 
 public class BasePage {
@@ -27,4 +29,24 @@ public class BasePage {
     protected void scrollToElement(WebElement element) {
         ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", element);
     }
+
+    // Метод для ожидания завершения загрузки страницы
+    protected void waitForPageToLoad() {
+        wait.until(driver -> ((JavascriptExecutor) driver)
+                .executeScript("return document.readyState").equals("complete"));
+    }
+
+    // Метод для ожидания видимости элемента
+    protected void waitForElementToBeVisible(WebElement element) {
+        waitForPageToLoad();  // Ожидаем загрузки страницы перед ожиданием элемента
+        wait.until(ExpectedConditions.visibilityOf(element));
+    }
+
+    // Метод для ожидания, что элемент будет кликабельным
+    protected void waitForElementToBeClickable(WebElement element) {
+        waitForPageToLoad();
+        wait.until(ExpectedConditions.elementToBeClickable(element));
+    }
 }
+
+

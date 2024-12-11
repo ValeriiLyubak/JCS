@@ -1,25 +1,39 @@
 package pages;
 
-import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 
 public class MainPage extends BasePage {
 
-    private By courseBuotton = By.xpath("//a[@href='/course']");
+    @FindBy(xpath = "//a[@href='/course']")
+    private WebElement courseButton;
 
-    private By userBuotton = By.xpath("//a[@href='/users']");
+    @FindBy(xpath = "//a[@href='/users']")
+    private WebElement userButton;
 
+    @FindBy(xpath = "//div[@class='menuProfile']")
+    private WebElement nameProfile;
 
     public MainPage(WebDriver driver) {
         super(driver);
+        waitForPageToLoad();
+        PageFactory.initElements(driver, this);
     }
 
-    public void clickcourseBuotton() {
-        wait.until(ExpectedConditions.elementToBeClickable(courseBuotton)).click();
-    }
-    public void clickuserBuotton() {
-        wait.until(ExpectedConditions.elementToBeClickable(userBuotton)).click();
+    public void clickCourseButton() {
+        wait.until(ExpectedConditions.elementToBeClickable(courseButton)).click();
     }
 
+    public void clickUserButton() {
+        wait.until(ExpectedConditions.elementToBeClickable(userButton)).click();
+    }
+
+    public String getNameUserProfile() {
+        wait.until(ExpectedConditions.elementToBeClickable(nameProfile));
+        return nameProfile.getText();
+    }
 }
+

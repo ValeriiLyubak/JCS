@@ -3,19 +3,27 @@ package pages;
 import configuration.ConfigManager;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 
 public class CoursePage extends BasePage {
-    private By addButton = By.xpath("//button[@class='btn btn-default']");
-    private By courseNameField = By.xpath("//input[@placeholder='Название'][1]");
-    private By createCourseButton = By.xpath("//button[text()='Create']");
+
+    @FindBy(xpath = "//button[@class='btn btn-default']")
+    private WebElement addButton;
+
+    @FindBy(xpath = "//input[@placeholder='Название'][1]")
+    private WebElement courseNameField;
+
+    @FindBy(xpath = "//button[text()='Create']")
+    private WebElement createCourseButton;
 
     public CoursePage(WebDriver driver) {
         super(driver);
     }
 
-    public By getCourseInTableLocator(String courseName) {
-        return By.xpath("//tbody/tr/td/span[text()='" + courseName + "']");
+    public String getCourseInTableXPath(String courseName) {
+        return "//tbody/tr/td/span[text()='" + courseName + "']";
     }
 
     public void clickAddButton() {
@@ -36,12 +44,13 @@ public class CoursePage extends BasePage {
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-        wait.until(ExpectedConditions.presenceOfElementLocated(getCourseInTableLocator(courseName)));
+        wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath(getCourseInTableXPath(courseName))));
     }
 
     public boolean isCoursePresent(String courseName) {
-        return !driver.findElements(getCourseInTableLocator(courseName)).isEmpty();
+        return !driver.findElements(By.xpath(getCourseInTableXPath(courseName))).isEmpty();
     }
 }
+
 
 
