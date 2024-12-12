@@ -14,6 +14,9 @@ public class MainPage extends BasePage {
     @FindBy(xpath = "//a[@href='/theme-question']")
     private WebElement questionButton;
 
+    @FindBy(xpath = "//a[@href='/quizes']")
+    private WebElement quizButton;
+
     @FindBy(xpath = "//a[@href='/course']")
     private WebElement courseButton;
 
@@ -39,6 +42,10 @@ public class MainPage extends BasePage {
 
     public void clickCourseButton() {
         wait.until(ExpectedConditions.elementToBeClickable(courseButton)).click();
+    }
+
+    public void clickQuizButton() {
+        wait.until(ExpectedConditions.elementToBeClickable(quizButton)).click();
     }
 
     public void clickUserButton() {

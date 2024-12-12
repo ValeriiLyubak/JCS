@@ -3,20 +3,21 @@ import org.testng.annotations.Test;
 import pages.LoginPage;
 import pages.MainPage;
 import pages.QuestionPage;
+import pages.QuizPage;
 
 import static org.testng.Assert.assertTrue;
 
-public class QuestionTest extends BaseTest {
+public class QuizTest extends BaseTest {
     private LoginPage loginPage;
     private MainPage mainPage;
-    private QuestionPage questionPage;
+    private QuizPage quizPage;
 
 
     @BeforeClass
     @Override
     public void setUp() {
         super.setUp();
-        questionPage = new QuestionPage(driver);
+        quizPage = new QuizPage(driver);
         mainPage = new MainPage(driver);
         loginPage = new LoginPage(driver);
 
@@ -24,7 +25,7 @@ public class QuestionTest extends BaseTest {
 
     @Test
     public void testInterviewTextInTable() {
-        logger.info("=== Начинаем тест: Проверка создания вопросов ===");
+        logger.info("=== Начинаем тест: Проверка создания Квизов ===");
 
         logger.info("Вводим логин");
         loginPage.inputLoginField();
@@ -35,23 +36,24 @@ public class QuestionTest extends BaseTest {
         logger.info("Кликаем по кнопке авторизации");
         loginPage.clickLoginButton();
 
-        logger.info("Кликаем по вкладке Вопросы");
-        mainPage.clickQuestionButton();
+        logger.info("Кликаем по вкладке Квизы");
+        mainPage.clickQuizButton();
 
-        logger.info("Кликаем по кнопке добавления вопроса");
-        questionPage.clickButtonAdd();
+        logger.info("Кликаем по кнопке добавления квиза");
+        quizPage.clickButtonAdd();
 
-        String questionName = "MyTestQuestion";
+        String questionName = "MyTestQuiz";
         logger.info("Вводим вопрос: " + questionName);
-        questionPage.inputInputQuestion(questionName);
+        quizPage.inputInputQuiz(questionName);
 
-        logger.info("Кликаем по кнопке создания вопроса");
-        questionPage.clickButtonCreate();
+        logger.info("Кликаем по кнопке создания квиза");
+        quizPage.clickButtonCreate();
 
         logger.info("Проверяем, что текст появился в таблице");
-        boolean isTextPresent = questionPage.isTextPresentInTable(questionName);
+        boolean isTextPresent = quizPage.isTextPresentInTable(questionName);
         assertTrue(isTextPresent, "Текст '" + questionName + "' не найден в таблице!");
 
-        logger.info("=== Тест: Проверка создания вопроса ===");
+        logger.info("=== Тест: Проверка создания квиза ===");
     }
 }
+
