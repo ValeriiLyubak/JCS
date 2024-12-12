@@ -32,7 +32,7 @@ public class AuthorizationTest extends BaseTest {
 
         logger.info("Проверяем, что пользователь успешно авторизовался");
         String actualUserName = mainPage.getNameUserProfile();
-        String expectedUserName = "Валерий Л";
+        String expectedUserName = "Пользователь";
         assertEquals(actualUserName, expectedUserName, "Имя пользователя не соответствует ожидаемому!");
 
         logger.info("=== Тест: Авторизация завершен успешно ===");

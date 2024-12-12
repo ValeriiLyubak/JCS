@@ -8,6 +8,9 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 
 public class MainPage extends BasePage {
 
+    @FindBy(xpath = "//a[@href='/interviews']")
+    private WebElement interviewsButton;
+
     @FindBy(xpath = "//a[@href='/course']")
     private WebElement courseButton;
 
@@ -21,6 +24,10 @@ public class MainPage extends BasePage {
         super(driver);
         waitForPageToLoad();
         PageFactory.initElements(driver, this);
+    }
+
+    public void clickinterviewsButton() {
+        wait.until(ExpectedConditions.elementToBeClickable(interviewsButton)).click();
     }
 
     public void clickCourseButton() {
