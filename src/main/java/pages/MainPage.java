@@ -11,6 +11,9 @@ public class MainPage extends BasePage {
     @FindBy(xpath = "//a[@href='/interviews']")
     private WebElement interviewsButton;
 
+    @FindBy(xpath = "//a[@href='/theme-question']")
+    private WebElement questionButton;
+
     @FindBy(xpath = "//a[@href='/course']")
     private WebElement courseButton;
 
@@ -26,8 +29,12 @@ public class MainPage extends BasePage {
         PageFactory.initElements(driver, this);
     }
 
-    public void clickinterviewsButton() {
+    public void clickInterviewsButton() {
         wait.until(ExpectedConditions.elementToBeClickable(interviewsButton)).click();
+    }
+
+    public void clickQuestionButton() {
+        wait.until(ExpectedConditions.elementToBeClickable(questionButton)).click();
     }
 
     public void clickCourseButton() {

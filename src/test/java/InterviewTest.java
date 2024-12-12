@@ -24,7 +24,7 @@ public class InterviewTest extends BaseTest {
 
     @Test
     public void testInterviewTextInTable() {
-        logger.info("=== Начинаем тест: Проверка текста в таблице интервью ===");
+        logger.info("=== Начинаем тест: Проверка создания интервью ===");
 
         logger.info("Вводим логин");
         loginPage.inputLoginField();
@@ -36,7 +36,7 @@ public class InterviewTest extends BaseTest {
         loginPage.clickLoginButton();
 
         logger.info("Кликаем по вкладке Интервью");
-        mainPage.clickinterviewsButton();
+        mainPage.clickInterviewsButton();
 
         logger.info("Кликаем по кнопке добавления интервью");
         interviewPage.clickButtonAdd();
@@ -52,6 +52,6 @@ public class InterviewTest extends BaseTest {
         boolean isTextPresent = interviewPage.isTextPresentInTable(interviewName);
         assertTrue(isTextPresent, "Текст '" + interviewName + "' не найден в таблице!");
 
-        logger.info("=== Тест: Проверка текста в таблице интервью завершен успешно ===");
+        logger.info("=== Тест: Проверка создания интервью ===");
     }
 }
