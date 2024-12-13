@@ -26,23 +26,16 @@ public class BasePage {
         driver.get(baseUrl);
     }
 
-    protected void scrollToElement(WebElement element) {
-        ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", element);
-    }
-
-    // Метод для ожидания завершения загрузки страницы
     protected void waitForPageToLoad() {
         wait.until(driver -> ((JavascriptExecutor) driver)
                 .executeScript("return document.readyState").equals("complete"));
     }
 
-    // Метод для ожидания видимости элемента
     protected void waitForElementToBeVisible(WebElement element) {
-        waitForPageToLoad();  // Ожидаем загрузки страницы перед ожиданием элемента
+        waitForPageToLoad();
         wait.until(ExpectedConditions.visibilityOf(element));
     }
 
-    // Метод для ожидания, что элемент будет кликабельным
     protected void waitForElementToBeClickable(WebElement element) {
         waitForPageToLoad();
         wait.until(ExpectedConditions.elementToBeClickable(element));

@@ -1,54 +1,59 @@
 package pages;
 
-import configuration.ConfigManager;
 import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 
+import java.util.List;
+
 public class CoursePage extends BasePage {
+
+    public CoursePage(WebDriver driver) {
+        super(driver);
+        waitForPageToLoad();
+        PageFactory.initElements(driver, this);
+    }
 
     @FindBy(xpath = "//button[@class='btn btn-default']")
     private WebElement addButton;
 
-    @FindBy(xpath = "//input[@placeholder='Название'][1]")
-    private WebElement courseNameField;
+    @FindBy(xpath = "//input[@placeholder='Название']")
+    private WebElement inputCourse;
 
-    @FindBy(xpath = "//button[text()='Create']")
-    private WebElement createCourseButton;
+    @FindBy(xpath = "//button[@class='btn-primary btn ']")
+    private WebElement createButton;
 
-    public CoursePage(WebDriver driver) {
-        super(driver);
-    }
+    @FindBy(xpath = "//div[@class='table-responsive']")
+    private WebElement courseTable;
 
-    public String getCourseInTableXPath(String courseName) {
-        return "//tbody/tr/td/span[text()='" + courseName + "']";
-    }
 
-    public void clickAddButton() {
+    public void clickAddCourseButton() {
         wait.until(ExpectedConditions.elementToBeClickable(addButton)).click();
     }
 
-    public void inputCourseNameField() {
-        wait.until(ExpectedConditions.elementToBeClickable(courseNameField)).sendKeys(ConfigManager.getCourseName());
+    public void inputInputCourse(String interviewName) {
+        wait.until(ExpectedConditions.elementToBeClickable(inputCourse)).sendKeys(interviewName);
     }
 
-    public void clickCreateCourseButton() {
-        wait.until(ExpectedConditions.elementToBeClickable(createCourseButton)).click();
+    public void clickCourseCreate() {
+        ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", createButton);
+        wait.until(ExpectedConditions.elementToBeClickable(createButton)).click();
     }
 
-    public void waitForCourseToAppearWithDelay(String courseName) {
-        try {
-            Thread.sleep(2000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
+    public boolean isTextPresentInTable(String expectedText) {
+        wait.until(ExpectedConditions.visibilityOf(courseTable));
+        List<WebElement> rows = courseTable.findElements(By.xpath(".//tr"));
+
+        for (WebElement row : rows) {
+            if (row.getText().contains(expectedText)) {
+                return true;
+            }
         }
-        wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath(getCourseInTableXPath(courseName))));
-    }
-
-    public boolean isCoursePresent(String courseName) {
-        return !driver.findElements(By.xpath(getCourseInTableXPath(courseName))).isEmpty();
+        return false;
     }
 }
 
